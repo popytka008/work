@@ -71,7 +71,7 @@ File::append('test_file.txt', ' $text_content = '.$text_content.PHP_EOL);
  * - вывод всегда и везде постоянен, по ятму вывожу его вниз подальше
  *
  */
-require_once "lib/v/viewer.php";
+require_once "lib/v/Viewer.php";
 $view = new Viewer();
 
 /*

@@ -4,6 +4,7 @@ class File {
   protected $_file_handler;
   protected $_file_name;
   protected $_mode;
+  protected $error;
 
 
   function __construct($_file_name, $_mode)

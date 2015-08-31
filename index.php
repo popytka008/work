@@ -1,6 +1,6 @@
 <?php
 
-require_once "lib/m/model.php";
+require_once "lib/m/Model.php";
 
 
 
@@ -14,7 +14,7 @@ $m->getTableRows();
 $articles = $m->getResult();
 
 if (!is_array($articles)) {
-  $content = $m->error;
+  $content = $m->_error;
 } else{
   // разворачиваем массив $articles в подшаблоне
   $content = $m->view_include("v/v_list.tpl", Array( 'articles' => $articles));
