@@ -7,23 +7,69 @@ class Model {
 
     protected $_result;
     protected $_error;
+    static protected $_connection;
 
-    public function createList() {
 
+    static public function __construct(){
+        self::$_connection = new Connection();
     }
 
-    /**
-     * Выборка из таблицы строки данных по ключу (если он есть),
-     * если ключа нет - из таблицы выбираются все данные.
-     * @param int | null $id - ключ в таблице
-     */
-    public function getTableRows($id = null) {
-        $server = new DBMS();
+    static public function connect(){
+        self::$_connection->open();
+    }
+    static public function disconnect(){
+        self::$_connection->close();
+    }
 
-        if ( !$this->_result = $server->select($id)) {
-            $this->_error = "{$server->error_message}\n;";
-            $this->_error .= "{$server->error_message}.";
+
+
+    public function getArticle($id){
+        $article = new Article(array());
+        $this->_error = "";
+        $server = new DBMS();
+        $result = $server->select($id);
+
+        if (!$result) {
+            $this->_error .= $server->error_message . PHP_EOL . $server->error_num;
+        } else {
+            $values = array();
+            foreach($result as $k => $v){
+                $values[] = $v;
+            }
+            $article = new Article($values);
         }
+
+        return $article;
+    }
+
+
+
+    public function getArticles($id = null){
+        $articles = array();
+        $this->_error = "";
+        $server = new DBMS();
+        $result = $server->select($id);
+
+        if (!$result) {
+            $this->_error .= $server->error_message . PHP_EOL . $server->error_num;
+        } else {
+            foreach($result as $arr){
+                $values = array();
+                foreach($arr as $k => $v){
+                    $values[] = $v;
+                }
+                $articles[] = new Article($values);
+            }
+        }
+
+        return $articles;
+    }
+
+
+    public function saveArticle($array)
+    {
+        $server = new DBMS();
+        $server->update(array($array[1], $array[2]), $array[0]);
     }
 
     /**

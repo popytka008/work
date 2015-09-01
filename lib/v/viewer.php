@@ -15,4 +15,11 @@ class Viewer {
     include $template_pathname;
     return ob_get_clean();
   }
+
+  static public function out($str)
+  {
+    echo $str;
+  }
+
+
 }

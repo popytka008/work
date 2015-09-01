@@ -1,33 +1,18 @@
 <?php
 
-require_once "lib/m/Model.php";
+require_once "lib/c/Controller.php";
+$controller = null;
 
-
-
-$header = "значительная ШАПКА";
-$content = "КАКОЕ-ТО С-О-Д-Е-Р-Ж-И-М-О-Е";
-$footer = "тихая шапка";
-$title = "ГРОМКИЙ ЗАГОЛОВОК";
-
-$m = new Model();
-$m->getTableRows();
-$articles = $m->getResult();
-
-if (!is_array($articles)) {
-  $content = $m->_error;
-} else{
-  // разворачиваем массив $articles в подшаблоне
-  $content = $m->view_include("v/v_list.tpl", Array( 'articles' => $articles));
+if ($_SERVER['REQUEST_METHOD'] === 'GET')
+{
+  if (!isset($_GET['id'])) $controller = new C_View();
+}
+else
+{
+  $controller = new C_Edit($_GET['id']);
 }
 
+$controller->Request();
 
-    // разворачиваем переменную $header в подшаблоне
-
-    // разворачиваем переменную $footer в подшаблоне
-
-
-
-// выводим все на экран
-echo $m->view_include("v/v_main.tpl", Array( 'header' => $header,'footer' => $footer,'content' => $content, 'title' => $title));
 
 

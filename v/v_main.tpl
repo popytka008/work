@@ -13,20 +13,15 @@
 </head>
 <body>
 
-  <?=$menu?>
+<?=$menu?>
 
 <div class="logo">
-  <span class="bolder">
-    <?=$title?>
-  </span>
-</div>
-<div id="mainBlock">
-
-  <?=$content?>
-
+  <h1><?=$title?></h1>
 </div>
 
-  <?=$footer?>
+<?=$content?>
+
+<?=$footer?>
 
 </body>
 </html>

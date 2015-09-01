@@ -15,6 +15,10 @@ class DBMS {
         $this->_connection = new Connection();
     }
 
+    /**
+     * @param null | int $id
+     * @return null | array
+     */
     public function select($id = null) {
         $query = QueryConstructor::getQueryStatic(Data::SELECT, null, '*', $id);
 
@@ -37,8 +41,6 @@ class DBMS {
 
     public function update($params, $id = null) {
         $query = QueryConstructor::getQueryStatic(Data::UPDATE, $params, null, $id);
-
-        //$this->_connection->Open();
 
         // целое число - количество измененных строк
         return $this->_getResult($query);
