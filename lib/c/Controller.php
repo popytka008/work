@@ -1,23 +1,23 @@
 <?php
-
+require_once 'lib/m/Model.php';
 
 /**
- * Class Controller áàçîâûé àáñòðàêòíûé êëàññ Êîíòðîë¸ðà
- * çàäàþùèé îñíîâíîé èíòåðôåéñ ïîòîìêàì è êîíöåïòó äåéñòâèé êîíòðîë¸ðîâ.
- * ìåòîäû:
- * -- Àáñòðàêòíûå
+ * Class Controller Ð±Ð°Ð·Ð¾Ð²Ñ‹Ð¹ Ð°Ð±ÑÑ‚Ñ€Ð°ÐºÑ‚Ð½Ñ‹Ð¹ ÐºÐ»Ð°ÑÑ ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ñ‘Ñ€Ð°
+ * Ð·Ð°Ð´Ð°ÑŽÑ‰Ð¸Ð¹ Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹Ñ Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ°Ð¼ Ð¸ ÐºÐ¾Ð½Ñ†ÐµÐ¿Ñ‚Ñƒ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ð¹ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ñ‘Ñ€Ð¾Ð².
+ * Ð¼ÐµÑ‚Ð¾Ð´Ñ‹:
+ * -- ÐÐ±ÑÑ‚Ñ€Ð°ÐºÑ‚Ð½Ñ‹Ðµ
  * OnInput()  void
  * OnOutput() void
- * -- Îïðåäåëåííûå
+ * -- ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ñ‹Ðµ
  * Request()  void
  * IsGet()    boolean
  * IsPost()   boolean
  * Template() string
  *
- * Öåëì è ñìûñë àáñòðàêòíûõ ìåòîäîâ:
- * OnInput()  void - ìåòîä äåëàåò íà÷àëüíóþ ðàáîòó ïðè ïîëó÷åíûõ äàíûõ îò êëèåíòà:
- *                   çàïðîñû ÁÄ, ïîäãîòîâêà ïîëó÷åííîãî.
- * OnOutPut() void - ìåòîä âûïîëíÿåò ðàáîòó ïî ðåàëèçàöèè ïåðåäà÷è äàííûõ êëèåíòó
+ * Ð¦ÐµÐ»Ð¼ Ð¸ ÑÐ¼Ñ‹ÑÐ» Ð°Ð±ÑÑ‚Ñ€Ð°ÐºÑ‚Ð½Ñ‹Ñ… Ð¼ÐµÑ‚Ð¾Ð´Ð¾Ð²:
+ * OnInput()  void - Ð¼ÐµÑ‚Ð¾Ð´ Ð´ÐµÐ»Ð°ÐµÑ‚ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½ÑƒÑŽ Ñ€Ð°Ð±Ð¾Ñ‚Ñƒ Ð¿Ñ€Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ñ‹Ñ… Ð´Ð°Ð½Ñ‹Ñ… Ð¾Ñ‚ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°:
+ *                   Ð·Ð°Ð¿Ñ€Ð¾ÑÑ‹ Ð‘Ð”, Ð¿Ð¾Ð´Ð³Ð¾Ñ‚Ð¾Ð²ÐºÐ° Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ð¾Ð³Ð¾.
+ * OnOutPut() void - Ð¼ÐµÑ‚Ð¾Ð´ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ Ñ€Ð°Ð±Ð¾Ñ‚Ñƒ Ð¿Ð¾ Ñ€ÐµÐ°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‡Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ñ… ÐºÐ»Ð¸ÐµÐ½Ñ‚Ñƒ
  */
 abstract class Controller
 {
@@ -33,12 +33,12 @@ abstract class Controller
 
   protected function IsGet()
   {
-    return ($_SERVER['REQUEST_METHOD'] === 'GET') ? 'true' : 'false';
+    return ($_SERVER['REQUEST_METHOD'] === 'GET');
   }
 
   protected function IsPost()
   {
-    return ($_SERVER['REQUEST_METHOD'] === 'POST') ? 'true' : 'false';
+    return ($_SERVER['REQUEST_METHOD'] === 'POST');
   }
 
   protected function Template($template_pathname, $content_array = array())
@@ -57,8 +57,8 @@ abstract class Controller
 /**
  * Class C_Base
  *
- * Íàçíà÷åíèå: âûïîëíåíèå âçàèìîäåéñòâèÿ ñ "êîíòåíòîì" - íà ïîòîìêàõ.
- *             íà ñåáÿ áåðåòñÿ ëèøü ïäêëþ÷åíèå ñåðâèñîâ è ñëèÿíèå â âûõîäíóþ ñòðàíèöó.
+ * ÐÐ°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ Ð²Ð·Ð°Ð¸Ð¼Ð¾Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ Ñ "ÐºÐ¾Ð½Ñ‚ÐµÐ½Ñ‚Ð¾Ð¼" - Ð½Ð° Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ°Ñ….
+ *             Ð½Ð° ÑÐµÐ±Ñ Ð±ÐµÑ€ÐµÑ‚ÑÑ Ð»Ð¸ÑˆÑŒ Ð¿Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð² Ð¸ ÑÐ»Ð¸ÑÐ½Ð¸Ðµ Ð² Ð²Ñ‹Ñ…Ð¾Ð´Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ.
  *
  */
 class C_Base extends Controller
@@ -74,58 +74,53 @@ class C_Base extends Controller
   protected $_footer;
 
   /**
-   * Çàãëóøêà, íàçíà÷àåò çíà÷åíèÿ àí âñÿêèé ñëó÷àé äëÿ $title è $content
-   * (â íàøåì ñëó÷àå - ñîçäàòü ñîåäèíåíèå)
+   * Ð—Ð°Ð³Ð»ÑƒÑˆÐºÐ°, Ð½Ð°Ð·Ð½Ð°Ñ‡Ð°ÐµÑ‚ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð°Ð½ Ð²ÑÑÐºÐ¸Ð¹ ÑÐ»ÑƒÑ‡Ð°Ð¹ Ð´Ð»Ñ $title Ð¸ $content
+   * (Ð² Ð½Ð°ÑˆÐµÐ¼ ÑÐ»ÑƒÑ‡Ð°Ðµ - ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ)
    *
    */
   protected function OnInput()
   {
-    $this->_title = "Ñòàòüè";
-    $this->_menu = "Ñîäåðæèìîå ìåíþ";
-    $this->_header = "Ñîäåðæèìîå øàïêè";
-    $this->_content = "Ñîäåðæèìîå îñíîâíîé ÷àñòè";
-    $this->_footer = "Ñîäåðæèìîå ïîäâàëà";
+    $this->_title = "Ð¡Ñ‚Ð°Ñ‚ÑŒÐ¸";
+    $this->_menu = "Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¼ÐµÐ½ÑŽ";
+    $this->_header = "Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ ÑˆÐ°Ð¿ÐºÐ¸";
+    $this->_content = "Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ñ‡Ð°ÑÑ‚Ð¸";
+    $this->_footer = "Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð´Ð²Ð°Ð»Ð°";
 
-    $this->_id_article = 0;
-    $this->_title_article = "Íàçâûàíèå ñòàòüè";
-    $this->_content_article = "Ñîäåðæèìîå ñòàòüè";
+    $this->_title_article = "ÐÐ°Ð·Ð²Ñ‹Ð°Ð½Ð¸Ðµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸";
+    $this->_content_article = "Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸";
 
-    Model::connect();
   }
 
   /**
-   * Ñëèÿíèå øàáëîíîâ â âûõîäíóþ ñòðàíèöû
-   * (çàêðûòèå ñîåäèíåíèÿ)
+   * Ð¡Ð»Ð¸ÑÐ½Ð¸Ðµ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð¾Ð² Ð² Ð²Ñ‹Ñ…Ð¾Ð´Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹
+   * (Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ)
    */
   protected function OnOutput()
   {
-    $template_pathname = "v/v_main.php";
+    $template_pathname = "v/v_main.tpl";
     $content_array = array('menu' => $this->_menu, 'title' => $this->_title, 'header' => $this->_header,
       'content' => $this->_content, 'footer' => $this->_footer);
     $page = $this->Template($template_pathname, $content_array);
 
-    Model::disconnect();
-
-    Viewer::out($page);
+    echo $page;
   }
 }
 
 /**
  * Class C_View
  *
- * Çàäà÷åé êëàññà ÿâëÿåòñÿ âûáîðêà äàííûõ (ïîìîùü ìåõàíèêà), ðàçâ¸ðòêà øàáëîíà v_list.php
- * ñ ñîõðàíåíèåì ðàçâåðòêè â ñâîéñòâî $this->content
+ * Ð—Ð°Ð´Ð°Ñ‡ÐµÐ¹ ÐºÐ»Ð°ÑÑÐ° ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²Ñ‹Ð±Ð¾Ñ€ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ… (Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒ Ð¼ÐµÑ…Ð°Ð½Ð¸ÐºÐ°), Ñ€Ð°Ð·Ð²Ñ‘Ñ€Ñ‚ÐºÐ° ÑˆÐ°Ð±Ð»Ð¾Ð½Ð° v_list.php
+ * Ñ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸ÐµÐ¼ Ñ€Ð°Ð·Ð²ÐµÑ€Ñ‚ÐºÐ¸ Ð² ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð¾ $this->content
  */
 class C_View extends C_Base
 {
   protected $_articles;
   protected $_error;
 
-
   protected function OnInput()
   {
     parent::OnInput();
-    $this->_title .= '::Ïðîñìîòð ñïèñêà ñòàòåé';
+    $this->_title .= '::ÐŸÑ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ ÑÐ¿Ð¸ÑÐºÐ° ÑÑ‚Ð°Ñ‚ÐµÐ¹';
 
     $model = new Model();
     $this->_articles = $model->getArticles();
@@ -144,38 +139,40 @@ class C_View extends C_Base
 
 /**
  * Class C_Edit
- * âíîñèò â ôîðìó ðåäàêòèðîâàíèÿ (v_edit) çíà÷åíèÿ
- * ïðîâåðÿåò ïðàâèëüíîñòü ââåäåííûõ (èñïðàâëåííûõ) äàííûõ â ôîðìå.
+ * Ð²Ð½Ð¾ÑÐ¸Ñ‚ Ð² Ñ„Ð¾Ñ€Ð¼Ñƒ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ (v_edit) Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
+ * Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ Ð¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾ÑÑ‚ÑŒ Ð²Ð²ÐµÐ´ÐµÐ½Ð½Ñ‹Ñ… (Ð¸ÑÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ñ‹Ñ…) Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ñ„Ð¾Ñ€Ð¼Ðµ.
  */
 class C_Edit extends C_Base
 {
   protected $_error;
   protected $_article;
-  protected $_id;
-
-  public function __construct($id){
-    $this->_id = (int)$id;
-  }
 
   protected function OnInput()
   {
     parent::OnInput();
 
-    // ñíà÷àëà îïðåäåëèòü ìåòîä ïðèõîäà - get / post
-    // åñëè post - âñòàâèòü äàííûå â èñòî÷íèê äàííûõ
-    if($this->IsPost())
-    {
+    // ÑÐ½Ð°Ñ‡Ð°Ð»Ð° Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ð¼ÐµÑ‚Ð¾Ð´ Ð¿Ñ€Ð¸Ñ…Ð¾Ð´Ð° - get / post
+    // ÐµÑÐ»Ð¸ post - Ð²ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð² Ð¸ÑÑ‚Ð¾Ñ‡Ð½Ð¸Ðº Ð´Ð°Ð½Ð½Ñ‹Ñ…
+    if ($this->IsPost()) {
+//      echo '<br/>Ð¸Ð»Ð¸: Ð£Ñ…Ð¾Ð¶Ñƒ Ð² ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸: C_Edit--$this->IsPost()<br/>';
+//      echo '<br/>Ð¸Ð»Ð¸: Ð£Ñ…Ð¾Ð¶Ñƒ Ð² ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸: C_Edit--$this->IsPost()<br/>';
+
       $model = new Model();
-      $model->saveArticle(array($_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
-      http_redirect("index.php");
+      if($_POST["operation"]==="update")
+        $model->saveArticle(array((int)$_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
+      else
+        $model->deleteArticle((int)$_POST['id_article']);
+
+      $this->_error = $model->getError();
+      header("Location: index.php");
     }
 
-    // ìåòîä get - ïðîñìîòð ñòàòüè
+    // Ð¼ÐµÑ‚Ð¾Ð´ get - Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ ÑÑ‚Ð°Ñ‚ÑŒÐ¸
 
-    $this->_title .= '::Ðåäàêòèðîâàíèå ñòàòüè';
+    $this->_title .= '::Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸';
 
     $model = new Model();
-    $this->_article = $model->getArticle($this->_id);
+    $this->_article = $model->getArticle((int)$_GET['id']);
     $this->_error = $model->getError();
   }
 

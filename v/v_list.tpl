@@ -3,12 +3,11 @@
 <?php foreach($articles as $article): ?>
   <div class="article">
     <p class="article-title">
-      <a href='edit.php?id=<?=$article->getId()?>'>
+      <a href='index.php?id=<?=$article->getId()?>'>
         <?=$article->getTitle()?>
       </a>
     </p>
     <div class="article-content"><?=$article->getContentTruncated()?></div>
   </div>
-  <?php print_r($article);echo "\n"; ?>
+
   <?php endforeach; ?>
-<?php endif; ?>

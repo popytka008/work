@@ -22,7 +22,8 @@ class DBMS {
     public function select($id = null) {
         $query = QueryConstructor::getQueryStatic(Data::SELECT, null, '*', $id);
 
-
+//        echo '<br/>Создание запроса SELECT->QueryConstructor::getQueryStatic: <br/>';
+//        echo var_export($query).'<br/>';
         //$this->_connection->Open();
 
         if ($r = mysql_query($query)) {
@@ -42,6 +43,8 @@ class DBMS {
     public function update($params, $id = null) {
         $query = QueryConstructor::getQueryStatic(Data::UPDATE, $params, null, $id);
 
+//        echo '<br/>Создание запроса UPDATE->QueryConstructor::getQueryStatic: <br/>';
+//        echo var_export($query).'<br/>';
         // целое число - количество измененных строк
         return $this->_getResult($query);
     }
@@ -50,6 +53,8 @@ class DBMS {
 
         $query = QueryConstructor::getQueryStatic(Data::INSERT, $params, null, null);
 
+//        echo '<br/>Создание запроса INSERT->QueryConstructor::getQueryStatic: <br/>';
+//        echo var_export($query).'<br/>';
         //$this->_connection->Open();
 
         // целое число - количество измененных строк
@@ -58,6 +63,9 @@ class DBMS {
 
     public function delete($id = null) {
         $query = QueryConstructor::getQueryStatic(Data::DELETE, null, null, $id);
+
+//        echo '<br/>Создание запроса DELETE->QueryConstructor::getQueryStatic: <br/>';
+//        echo var_export($query).'<br/>';
 
         //$this->_connection->Open();
 

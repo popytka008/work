@@ -1,77 +1,89 @@
 <?php
 
 require_once "lib/components/DBMS.php";
+require_once "lib/components/Article.php";
 
 
 class Model {
 
     protected $_result;
     protected $_error;
-    static protected $_connection;
 
 
-    static public function __construct(){
-        self::$_connection = new Connection();
-    }
-
-    static public function connect(){
-        self::$_connection->open();
-    }
-    static public function disconnect(){
-        self::$_connection->close();
-    }
-
-
-
-    public function getArticle($id){
-        $article = new Article(array());
-        $this->_error = "";
-        $server = new DBMS();
-        $result = $server->select($id);
-
-        if (!$result) {
-            $this->_error .= $server->error_message . PHP_EOL . $server->error_num;
-        } else {
-            $values = array();
-            foreach($result as $k => $v){
-                $values[] = $v;
-            }
-            $article = new Article($values);
-        }
-
-        return $article;
-    }
-
-
-
-    public function getArticles($id = null){
+    public function getArticles($id = null)
+    {
         $articles = array();
         $this->_error = "";
         $server = new DBMS();
         $result = $server->select($id);
 
         if (!$result) {
-            $this->_error .= $server->error_message . PHP_EOL . $server->error_num;
+            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
         } else {
-            foreach($result as $arr){
+            foreach ($result as $arr) {
                 $values = array();
-                foreach($arr as $k => $v){
+                foreach ($arr as $k => $v) {
                     $values[] = $v;
                 }
                 $articles[] = new Article($values);
             }
         }
 
+        //echo '<br/>Создание статьи в model->getArticles(): <br/>';
+        //echo var_export($articles) . '<br/>';
+
+        $this->_result = $articles;
         return $articles;
+    }
+
+
+    public function getArticle($id){
+
+        $article = new Article(array());
+        $this->_error = "";
+        $server = new DBMS();
+        $result = $server->select($id);
+
+        if (!$result) {
+            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+        } else {
+            $values = array();
+            foreach($result[0] as $k => $v){
+                $values[] = $v;
+            }
+            $article = new Article($values);
+        }
+
+        //echo '<br/>Создание статьи в model->getArticle($id): <br/>';
+        //echo var_export($article).'<br/>';
+
+        $this->_result = $article;
+        return $article;
     }
 
 
     public function saveArticle($array)
     {
+        //echo '<br/>Сохранение статьи в model->saveArticle($params, $id): <br/>';
+        //echo var_export($article).'<br/>';
+
+        $this->_error = "";
         $server = new DBMS();
-        $server->update(array($array[1], $array[2]), $array[0]);
+        if(!($this->_result = $server->update(array($array[1], $array[2]), $array[0]))){
+            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+        }
     }
 
+    public function deleteArticle($id)  {
+        //echo '<br/>Сохранение статьи в model->saveArticle($params, $id): <br/>';
+        //echo var_export($article).'<br/>';
+
+        $this->_error = "";
+        $server = new DBMS();
+        if(!($this->_result = $server->delete($id))){
+            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+        }
+    }
     /**
      * @return array | null
      */
@@ -92,13 +104,13 @@ class Model {
 //        File::append('test_file.txt', $str);
 
 
-        return ($_SERVER['REQUEST_METHOD'] === 'GET') ?'true' :'false';
+        return ($_SERVER['REQUEST_METHOD'] === 'GET');
     }
     public function isPost() {
 //        $str = '/*----------------------- вход и выход в Model()->isPost() -------------------*/'.PHP_EOL;
 //        File::append('test_file.txt', $str);
 
-        return ($_SERVER['REQUEST_METHOD'] === 'POST') ?'true' :'false';
+        return ($_SERVER['REQUEST_METHOD'] === 'POST');
 }
 
     public function getMethod() {
