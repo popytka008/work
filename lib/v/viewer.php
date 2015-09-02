@@ -4,7 +4,7 @@
 class Viewer {
 
 
-  public function view_include($template_pathname, $content_array = array())
+  public function render($template_pathname, $content_array = array())
   {
 
     foreach ($content_array as $key => $item) {

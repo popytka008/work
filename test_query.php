@@ -77,20 +77,20 @@ $view = new Viewer();
 /*
  * сначала сделаем $title
  */
-$title = $view->view_include("v/v_test_query_title.tpl");
+$title = $view->render("v/v_test_query_title.tpl");
 
 /*
  * теперь $header
  * здесь не нужны параметры
  *
  */
-$menu = $view->view_include("v/v_test_query_menu.tpl", array('message'=>$message));
+$menu = $view->render("v/v_test_query_menu.tpl", array('message'=>$message));
 
 /*
  * таким же образом $content и $footer
  */
-$content = $view->view_include("v/v_test_query_content.tpl", array('text_id'=>$text_id, 'text_title'=>$text_title, 'text_content'=>$text_content, 'result'=>$result));
-$footer = $view->view_include("v/v_test_query_footer.tpl");
+$content = $view->render("v/v_test_query_content.tpl", array('text_id'=>$text_id, 'text_title'=>$text_title, 'text_content'=>$text_content, 'result'=>$result));
+$footer = $view->render("v/v_test_query_footer.tpl");
 
 /*
  * ТЕПЕРЬ ВЫВОДИМ ГЛАВНУЮ СТРАНИЦУ
@@ -100,7 +100,7 @@ $footer = $view->view_include("v/v_test_query_footer.tpl");
 $str = '/**************** выход из файла test_query.php **************/'.PHP_EOL.'/'.PHP_EOL.'/'.PHP_EOL.'/';
 File::append('test_file.txt', $str);
 
-echo $view->view_include("v/v_test_query.tpl", array('title' => $title,
+echo $view->render("v/v_test_query.tpl", array('title' => $title,
                                                             'menu'=> $menu,
                                                             'content'=> $content,
                                                             'footer' => $footer ));
