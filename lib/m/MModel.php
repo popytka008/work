@@ -30,6 +30,7 @@ class Model {
 
         return ($_SERVER['REQUEST_METHOD'] === 'GET');
     }
+
     public function isPost() {
 //        $str = '/*----------------------- вход и выход в Model()->isPost() -------------------*/'.PHP_EOL;
 //        File::append('test_file.txt', $str);

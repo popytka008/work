@@ -34,7 +34,7 @@ $command = "";
 //  File::append('test_file.txt', var_export($_POST, true));
 //  File::append('test_file.txt', PHP_EOL);
 
-  require_once 'lib/m/Model.php';
+  require_once 'lib/m/MModel.php';
   $model = new Model();
 
 //  $content .= sprintf("new Model()->getMethod(): %s\n<br/>", $model ->getMethod());
@@ -58,7 +58,7 @@ $command = "";
   $str = '/*------------------- вход в разбор методов класса DBMS ---------------------*/'.PHP_EOL;
   File::append('test_file.txt', $str);
 
-  require_once 'lib/m/Model.php';
+  require_once 'lib/m/MModel.php';
   $d = new DBMS();
   $content .= sprintf("После \$d = new DBMS();; определим компоненты объекта \$d<br/>".PHP_EOL);
   $content .= sprintf("%s<br/>".PHP_EOL, var_export($d, true));
