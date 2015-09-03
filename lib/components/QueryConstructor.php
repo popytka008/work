@@ -9,32 +9,71 @@
 
 require_once "lib/data/Data.php";
 
+
+/**
+ * Class QueryConstructor
+ * конструктор строк SQL-запросов, генерация строки запроса.
+ */
 class QueryConstructor{
 
     // SELECT INSERT UPDATE DELETE
-    protected $_command;
-    // RESOLVED QUERY
-    protected $_query;
-    // MODIFYING COLUMNS
-    protected $_columns;
-    // APPLYING VALUES
-    protected $_values;
-    // KEY FIELD VALUE
-    protected $_ID;
-    // KEY FIELD VALUE
-    protected $_ID_column;
-
+    /**
+     * шаблон операции select
+     */
     const TEMPLATE_SELECT = "SELECT %s FROM `%s` ";
+    // RESOLVED QUERY
+    /**
+     * шаблон операции select по имеющемуся ключу
+     */
     const TEMPLATE_SELECT_ID = "SELECT %s FROM `%s` WHERE `%s` = %d";
-
+    // MODIFYING COLUMNS
+    /**
+     * шаблон операции insert
+     */
     const TEMPLATE_INSERT = "INSERT INTO `%s` (`%s`, `%s`) VALUES ('%s', '%s')";
-
+    // APPLYING VALUES
+    /**
+     * шаблон операции update
+     */
     const TEMPLATE_UPDATE = "UPDATE `%s` SET `%s` = '%s', `%s` = '%s'";
+    // KEY FIELD VALUE
+    /**
+     * шаблон операции update по имеющемуся ключу
+     */
     const TEMPLATE_UPDATE_ID = "UPDATE `%s` SET `%s` = '%s', `%s` = '%s' WHERE `%s` = %d";
-
+    // KEY FIELD VALUE
+    /**
+     * шаблон операции delete
+     */
     const TEMPLATE_DELETE = "DELETE  FROM `%s` ";
+    /**
+     * шаблон операции delete по имеющемуся ключу
+     */
     const TEMPLATE_DELETE_ID = "DELETE  FROM `%s` WHERE `%s` = %d";
-
+    /**
+     * @var Data::SELECT | Data::INSERT | Data::UPDATE | Data::DELETE SQL-операция
+     */
+    protected $_command;
+    /**
+     * @var string сгенерированный SQL-запрос
+     */
+    protected $_query;
+    /**
+     * @var array перечень имен изменяемых колонок таблицы
+     */
+    protected $_columns;
+    /**
+     * @var null | array перечень изменяемых полей
+     */
+    protected $_values;
+    /**
+     * @var null | int ключевое поле
+     */
+    protected $_ID;
+    /**
+     * @var string имя ключевого коонки таблицы
+     */
+    protected $_ID_column;
 
     /**
      * Для конструктора: вид комманды, значения полей, поля, значение ключа
@@ -73,7 +112,49 @@ class QueryConstructor{
       //File::append('test_file.txt', PHP_EOL);
     }
 
+    /**
+     * Ввозвращает из конструктора запросов сформированный запрос по предоставленным данным
+     * Для работы: вид комманды, значения полей, поля, значение ключа
+     *
+     * @param $_command - вид комманды: тип Data::INSERT | Data::INSERT | Data::UPDATE | Data::DELETE
+     * @param null $_values - значения полей: массив занчений
+     * @param null $_columns - поля: массив (или значение "*") для запроса SELECT
+     * @param null $_ID - значение ключа: целое значение индекса (в данном случае)
+     *
+     * @return string
+     */
+    static public function getQueryStatic($_command, $_values = null, $_columns = null, $_ID = null) {
 
+        $obj = new QueryConstructor($_command, $_values, $_columns, $_ID);
+        $q = $obj->getQuery();
+
+        return $q;
+    }
+
+    /**
+     * Изъять сгенерированный sql-запрос
+     * @return string
+     */
+    public function getQuery() {
+//      $str = '/*----------------------- вход в QueryConstructor->getQuery() -------*/'.PHP_EOL;
+//      File::append('test_file.txt', $str);
+
+        if( !$this->_query) {
+            $this->createQuery();
+        }
+
+//      File::append('test_file.txt', 'Сгенерировнный запрос:'.PHP_EOL);
+//      File::append('test_file.txt', $this->_query.PHP_EOL);
+//
+//      $str = '/*----------------------- выход из QueryConstructor->createDeleteQuery() --*/'.PHP_EOL;
+//      File::append('test_file.txt', $str);
+
+        return $this->_query;
+    }
+
+    /**
+     * Создание запроса (передача управления по методу запроса CRUD)
+     */
     protected function createQuery(){
 
 //      $str = '/*----------------------- вход в QueryConstructor->createQuery() ----*/'.PHP_EOL;
@@ -90,6 +171,9 @@ class QueryConstructor{
 //      File::append('test_file.txt', $str);
     }
 
+    /**
+     * создание запроса select
+     */
     protected function createSelectQuery(){
 //      $str = '/*----------------------- вход в QueryConstructor->createSelectQuery() ----*/'.PHP_EOL;
 //      File::append('test_file.txt', $str);
@@ -108,6 +192,9 @@ class QueryConstructor{
 //      File::append('test_file.txt', $str);
     }
 
+    /**
+     * создание запроса insert
+     */
     protected function createInsertQuery(){
 //      $str = '/*----------------------- вход в QueryConstructor->createInsertQuery() ----*/'.PHP_EOL;
 //      File::append('test_file.txt', $str);
@@ -119,6 +206,9 @@ class QueryConstructor{
                                 $this->_values[0], $this->_values[1]);
     }
 
+    /**
+     * создание запроса update
+     */
     protected function createUpdateQuery(){
 //      $str = '/*----------------------- вход в QueryConstructor->createUpdateQuery() ----*/'.PHP_EOL;
 //      File::append('test_file.txt', $str);
@@ -141,6 +231,9 @@ class QueryConstructor{
             );
     }
 
+    /**
+     * создание запроса delete
+     */
     protected function createDeleteQuery(){
 //      $str = '/*----------------------- вход в QueryConstructor->createDeleteQuery() ----*/'.PHP_EOL;
 //      File::append('test_file.txt', $str);
@@ -153,41 +246,6 @@ class QueryConstructor{
         //const TEMPLATE_DELETE = "DELETE  FROM `%s` ";
         else
             $this->_query = sprintf(self::TEMPLATE_DELETE , Data::TABLE);
-    }
-
-    public function getQuery(){
-//      $str = '/*----------------------- вход в QueryConstructor->getQuery() -------*/'.PHP_EOL;
-//      File::append('test_file.txt', $str);
-
-        if(!$this->_query){
-            $this->createQuery();
-        }
-
-//      File::append('test_file.txt', 'Сгенерировнный запрос:'.PHP_EOL);
-//      File::append('test_file.txt', $this->_query.PHP_EOL);
-//
-//      $str = '/*----------------------- выход из QueryConstructor->createDeleteQuery() --*/'.PHP_EOL;
-//      File::append('test_file.txt', $str);
-
-      return $this->_query;
-    }
-
-
-    /**
-     * Ввозвращает из конструктора запросов сформированный запрос по предоставленным данным
-     * Для работы: вид комманды, значения полей, поля, значение ключа
-     * @param $_command - вид комманды: тип Data::INSERT | Data::INSERT | Data::UPDATE | Data::DELETE
-     * @param null $_values - значения полей: массив занчений
-     * @param null $_columns- поля: массив (или значение "*") для запроса SELECT
-     * @param null $_ID - значение ключа: целое значение индекса (в данном случае)
-     * @return string
-     */
-    static public function getQueryStatic($_command, $_values = null, $_columns = null, $_ID = null){
-
-        $obj = new QueryConstructor($_command, $_values, $_columns, $_ID);
-        $q = $obj->getQuery();
-
-        return $q;
     }
 }
 

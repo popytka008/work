@@ -1,13 +1,51 @@
 <?php
 
+
+/**
+ * Class Article
+ * Описывает сущность СТАТЬЯ - элемент таблицы БД Articles
+ * $_id
+ * $_title
+ * $_content
+ *
+ * $_id_naming        наименование колонки таблицы
+ * $_title_naming     наименование колонки таблицы
+ * $_content_naming   наименование колонки таблицы
+ *
+ * __construct($values = array()) - поля статьи в массиве
+ * getArticle()             изъять статью
+ * getContent()             изъять основное содержимое статьи
+ * getContentTruncated()    изъять усечённое до 200 символов основное содержимое статьи
+ * getTitle()               изъять заголовок статью
+ * getId()                  изъять ключ
+ */
 class Article
 {
+
+  /**
+   * @var int ключевое поле статьи
+   */
   protected $_id;
+  /**
+   * @var string заголовок статьи
+   */
   protected $_title;
+  /**
+   * @var string содержимое статьи
+   */
   protected $_content;
 
+  /**
+   * @var string имя поля таблицы
+   */
   protected $_id_naming;
+  /**
+   * @var string имя поля таблицы
+   */
   protected $_title_naming;
+  /**
+   * @var string имя поля таблицы
+   */
   protected $_content_naming;
 
 
@@ -27,6 +65,7 @@ class Article
       $this->_content = "";
     }
 
+    //именование имён полей таблицы статей
     $this->_id_naming = Data::FIRST_COLUMN;
     $this->_title_naming = Data::SECOND_COLUMN;
     $this->_content_naming = Data::THIRD_COLUMN;
@@ -41,7 +80,7 @@ class Article
   }
 
   /**
-   * @return mixed
+   * @return string
    */
   public function getContent()
   {
@@ -49,7 +88,7 @@ class Article
   }
 
   /**
-   * @return mixed
+   * @return string усекновение содержимого статьи до 200 символов
    */
   public function getContentTruncated()
   {
@@ -60,7 +99,7 @@ class Article
   }
 
   /**
-   * @return mixed
+   * @return string
    */
   public function getTitle()
   {
@@ -68,7 +107,7 @@ class Article
   }
 
   /**
-   * @return mixed
+   * @return int
    */
   public function getId()
   {
