@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/m/MModel.php';
+require_once 'lib/m/Model.php';
 require_once "lib/components/DBMS.php";
 require_once "lib/components/Article.php";
 
