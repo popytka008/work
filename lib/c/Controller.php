@@ -23,16 +23,6 @@ require_once 'lib/v/Viewer.php';
 abstract class Controller
 {
   /**
-   * Перечень процедур для работы с входными данными
-   */
-  abstract protected function OnInput();
-
-  /**
-   * Перечень процедур для работы с выходными данными
-   */
-  abstract protected function OnOutput();
-
-  /**
    * Загрузка стандортной работой
    * $this->OnInput();  - работа с входными данными
    * $this->OnOutput(); - работа с выходными данными
@@ -42,6 +32,16 @@ abstract class Controller
     $this->OnInput();
     $this->OnOutput();
   }
+
+  /**
+   * Перечень процедур для работы с входными данными
+   */
+  abstract protected function OnInput();
+
+  /**
+   * Перечень процедур для работы с выходными данными
+   */
+  abstract protected function OnOutput();
 
   /**
    * Проверка текущего метода HTTP REQUEST
@@ -137,7 +137,7 @@ class C_Base extends Controller
 
     $v = new Viewer();
     $page = $v->render($template_pathname, $content_array);
-    echo $page;
+    $v->out($page);
   }
 }
 
@@ -148,7 +148,7 @@ class C_Base extends Controller
  * класс реализует контролёра целью которого является:
  * - передача Мехаику данных для обработки входных и подготовки выходных данных,
  * (здесь реализуется подшаблон списка статей)
- * - передача Видеопроектору выходных данных для реализации своего подшаблона.@deprecated
+ * - передача Видеопроектору выходных данных для реализации своего подшаблона.
  * - передача управления классу-предку для слияния всех шаблонов и вывода результата.
  *(здесь слияние реализует страницу HTML со списком статей)
  */
