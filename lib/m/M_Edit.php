@@ -1,12 +1,18 @@
 <?php
 
-require_once 'lib/m/Model.php';
-require_once "lib/components/DBMS.php";
-require_once "lib/components/Article.php";
 
-
+/**
+ * Class M_Edit
+ * Работает со своим  Контролёром и Видеопроектором
+ * Вычисляет (используя низкоуровневые утилиты) результат CRUD-запроса БД в данном случае это запрос UPDATE SELECT(id)
+ * методы: public function getArticle($id),function saveArticle($array)
+ */
 class M_Edit extends Model {
 
+  /**
+   * @param $id int ключ выборки CRUD-запроса БД
+   * @return Article объект, описывающий статью
+   */
     public function getArticle($id) {
 
         $article = new Article(array());
@@ -33,6 +39,10 @@ class M_Edit extends Model {
     }
 
 
+  /**
+   * вычисление CRUD-запроса БД UPDATE, при неудаче - записать ошибку
+   * @param $array array запакованные параметры для CRUD-запроса БД UPDATE
+   */
     public function saveArticle($array) {
         //echo '<br/>Сохранение статьи в model->saveArticle($params, $id): <br/>';
         //echo var_export($article).'<br/>';

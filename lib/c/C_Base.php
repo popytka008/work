@@ -1,6 +1,5 @@
 <?php
-require_once 'lib/v/Viewer.php';
-require_once 'lib/c/Controller.php';
+
 
 
 /**
@@ -57,8 +56,9 @@ class C_Base extends Controller {
      */
     protected function OnInput() {
         $this->_title = "Статьи";
-        $this->_menu = "Содержимое меню";
         $this->_header = "Содержимое шапки";
+        $this->_menu = "Содержимое меню";
+
         $this->_content = "Содержимое основной части";
         $this->_footer = "Содержимое подвала";
 
@@ -71,12 +71,16 @@ class C_Base extends Controller {
      * Отображение.
      */
     protected function OnOutput() {
+
+        $tmp = new C_Menu();
+        $this->_menu = $tmp->getMenu();
+
         $template_pathname = "v/v_main.tpl";
-        $content_array = array('menu'    => $this->_menu, 'title' => $this->_title, 'header' => $this->_header,
+        $archive = array('menu' => $this->_menu, 'title' => $this->_title, 'header' => $this->_header,
                                'content' => $this->_content, 'footer' => $this->_footer);
 
         $v = new Viewer();
-        $page = $v->render($template_pathname, $content_array);
+        $page = $v->render($template_pathname, $archive);
         $v->out($page);
     }
 }

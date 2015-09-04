@@ -1,6 +1,4 @@
 <?php
-require_once 'lib/m/M_List.php';
-require_once 'lib/c/C_Base.php';
 
 
 /**
@@ -29,13 +27,22 @@ class C_List extends C_Base {
      * Анализ входных данных, передача работы Механику, для подготовки выходных данных.@deprecated
      * сохранение данных array[Article] в $_articles
      */
-    protected function OnInput() {
+    protected function OnInput()
+    {
         parent::OnInput();
-        $this->_title .= '::Просмотр списка статей';
-
         $model = new M_List();
-        $this->_articles = $model->getArticles();
-        $this->_error = $model->getError();
+
+        if (isset($_GET['id'])) {
+            // работаем с одной статьёй
+            $this->_title .= '::Просмотр статьи';
+            $model->getArticles((int)$_GET['id']);
+            $this->_error = $model->getError();
+        } else {
+            // работаем со списком статей
+            $this->_title .= '::Просмотр списка статей';
+            $this->_articles = $model->getArticles();
+            $this->_error = $model->getError();
+        }
     }
 
     /**
@@ -45,11 +52,11 @@ class C_List extends C_Base {
      * Вызов метода предка parent::OnOutput() для слияния всех подшаблонов и вывода результата.
      */
     protected function OnOutput() {
-        $arr = array('error' => nl2br($this->_error), 'articles' => $this->_articles);
+        $archive = array('error' => nl2br($this->_error), 'articles' => $this->_articles);
 
         $v = new Viewer();
 
-        $this->_content = $v->render("v/v_list.tpl", $arr);
+        $this->_content = $v->render("v/v_list.tpl", $archive);
         parent::OnOutput();
     }
 }

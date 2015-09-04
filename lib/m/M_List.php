@@ -1,18 +1,20 @@
 <?php
 
-require_once 'lib/m/Model.php';
-require_once "lib/components/DBMS.php";
-require_once "lib/components/Article.php";
+
 
 
 /**
- * Created by PhpStorm.
- * User: Андрей
- * Date: 03.09.2015
- * Time: 18:14
+ * Class M_List
+ * Работает со своим  Контролёром и Видеопроектором
+ * Вычисляет (используя низкоуровневые утилиты) результат CRUD-запроса БД в данном случае это запрос SELECT
+ * метод getArticles($id = null)
  */
 class M_List extends Model {
 
+    /**
+     * @param null | int $id ключ для выборки CRUD-запроса БД
+     * @return array массив статей (пустой (с записью ошибки) или полный)
+     */
     public function getArticles($id = null) {
         $articles = array();
         $this->_error = "";

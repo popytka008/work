@@ -28,35 +28,30 @@ class C_Edit extends C_Base {
      * Анализ входных данных, передача работы Механику, для подготовки выходных данных.
      * сохранение данных статьи в $_article
      */
-    protected function OnInput() {
+    protected function OnInput()
+    {
         parent::OnInput();
 
+        // метод get - просмотр статьи
+        $this->_title .= '::Редактирование статьи';
+        $model = new M_Edit();
         // сначала определить метод прихода - get / post
-
-        // если post - вставить данные в источник данных
-        if($this->IsPost()) {
+        // если post - обновить данные в источнике данных
+        if ($this->IsPost()) {
 //      echo '<br/>или: Ухожу в сохранение статьи: C_Edit--$this->IsPost()<br/>';
 //      echo '<br/>или: Ухожу в удаление статьи: C_Edit--$this->IsPost()<br/>';
 
-            if($_POST["operation"] === "update") {
-                $model = new M_Edit();
-                $model->saveArticle(array((int)$_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
-            } else {
-                $model = new M_Delete();
-                $model->deleteArticle((int)$_POST['id_article']);
-            }
+            $model->saveArticle(array((int)$_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
 
-            // не провожу проверку выполнения запроса
-            // при неудаче надо бы повторить форму
-            $this->_error = $model->getError();
-            header("Location: index.php");
+            // при удаче на главную страницу
+            if (!($this->_error = $model->getError()))
+                header("Location: index.php");
+            else
+                // метод post- неудачное сохранение - повторить форму
+                $this->_article = new Article(array($_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
         }
 
-        // метод get - просмотр статьи
-        {
-            $this->_title .= '::Редактирование статьи';
-
-            $model = new M_Edit();
+        if ($model->isGet()) {
             $this->_article = $model->getArticle((int)$_GET['id']);
             $this->_error = $model->getError();
         }
@@ -69,10 +64,10 @@ class C_Edit extends C_Base {
      * Вызов метода предка parent::OnOutput() для слияния всех подшаблонов и вывода результата.
      */
     protected function OnOutput() {
-        $arr = array('error' => nl2br($this->_error), 'article' => $this->_article);
+        $archive = array('error' => nl2br($this->_error), 'article' => $this->_article);
 
         $v = new Viewer();
-        $this->_content = $v->render("v/v_edit.tpl", $arr);
+        $this->_content = $v->render("v/v_edit.tpl", $archive);
         parent::OnOutput();
     }
 }

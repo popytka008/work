@@ -1,10 +1,11 @@
+
 <div class="container">
   <div>
     <div class="error-block"><?=$error?></div>
     <?php foreach($articles as $article): ?>
     <div class="article">
       <p class="article-title">
-        <a href='index.php?id=<?=$article->getId()?>'>
+        <a href="index.php?c=one&id=<?=$article->getId()?>">
           <?=$article->getTitle()?>
         </a>
       </p>
