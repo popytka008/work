@@ -8,4 +8,5 @@
             <?=$article->getContent()?>
         </div>
     </div>
+    <a href="index.php?c=edit&id=<?=$article->getID()?>">редактировать</a>
 </div>

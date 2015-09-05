@@ -1,6 +1,4 @@
 <?php
-require_once 'lib/m/M_Edit.php';
-require_once 'lib/c/C_Base.php';
 
 
 /**
@@ -24,6 +22,19 @@ class C_Edit extends C_Base {
      */
     protected $_article;
 
+//    /**
+//     * @var M_Edit
+//     */
+//    protected $_model;
+//
+//    /**
+//     * C_Edit constructor.
+//     */
+//    public function __construct()
+//    {
+//        $this->_model = new M_Edit();
+//    }
+
     /**
      * Анализ входных данных, передача работы Механику, для подготовки выходных данных.
      * сохранение данных статьи в $_article
@@ -34,26 +45,23 @@ class C_Edit extends C_Base {
 
         // метод get - просмотр статьи
         $this->_title .= '::Редактирование статьи';
-        $model = new M_Edit();
-        // сначала определить метод прихода - get / post
-        // если post - обновить данные в источнике данных
-        if ($this->IsPost()) {
-//      echo '<br/>или: Ухожу в сохранение статьи: C_Edit--$this->IsPost()<br/>';
-//      echo '<br/>или: Ухожу в удаление статьи: C_Edit--$this->IsPost()<br/>';
 
-            $model->saveArticle(array((int)$_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
+        // post - обновить данные в источнике данных
+        if (Model::IsPost()) {
+            $this->_model->saveArticle(array((int)$_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
 
             // при удаче на главную страницу
-            if (!($this->_error = $model->getError()))
+            if (!($this->_error = $this->_model->getError()))
                 header("Location: index.php");
             else
-                // метод post- неудачное сохранение - повторить форму
+                // метод post- неудачное редактирование - повторить форму
                 $this->_article = new Article(array($_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
         }
 
-        if ($model->isGet()) {
-            $this->_article = $model->getArticle((int)$_GET['id']);
-            $this->_error = $model->getError();
+        // Заход по ссылке с другой страницы
+        if (Model::isGet()) {
+            $this->_article = $this->_model->getArticle((int)$_GET['id']);
+            $this->_error = $this->_model->getError();
         }
     }
 

@@ -7,8 +7,6 @@
 
 
 
-require_once "lib/data/Data.php";
-
 
 /**
  * Class QueryConstructor

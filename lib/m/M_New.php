@@ -10,12 +10,12 @@
 class M_New extends Model
 {
 
-  public function addArticle($array)
+  public function addArticle(array $array)
   {
     $this->_error = "";
-    $server = new DBMS();
-    if (!($this->_result = $server->insert($array))) {
-      $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+
+    if (!($this->_result = $this->_databaseManager->insert($array))) {
+      $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
     }
   }
 }

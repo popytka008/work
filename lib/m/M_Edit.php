@@ -13,44 +13,29 @@ class M_Edit extends Model {
    * @param $id int ключ выборки CRUD-запроса БД
    * @return Article объект, описывающий статью
    */
-    public function getArticle($id) {
+  public function getArticle($id)
+  {
+    $this->_error = "";
 
-        $article = new Article(array());
-        $this->_error = "";
-        $server = new DBMS();
-        $result = $server->select($id);
+    $result = $this->_databaseManager->select($id);
 
-        if( !$result) {
-            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
-        } else {
-            $values = array();
-            foreach($result[0] as $k => $v) {
-                $values[] = $v;
-            }
-            $article = new Article($values);
-        }
-
-        //echo '<br/>Создание статьи в model->getArticle($id): <br/>';
-        //echo var_export($article).'<br/>';
-
-        $this->_result = $article;
-
-        return $article;
+    if (!$result) {
+      $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
     }
 
+    return $this->_result = $result[0];
+  }
 
   /**
    * вычисление CRUD-запроса БД UPDATE, при неудаче - записать ошибку
    * @param $array array запакованные параметры для CRUD-запроса БД UPDATE
    */
-    public function saveArticle($array) {
-        //echo '<br/>Сохранение статьи в model->saveArticle($params, $id): <br/>';
-        //echo var_export($article).'<br/>';
+  public function saveArticle(array $array)
+  {
 
         $this->_error = "";
-        $server = new DBMS();
-        if( !($this->_result = $server->update(array($array[1], $array[2]), $array[0]))) {
-            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+    if (!($this->_result = $this->_databaseManager->update(array($array[1], $array[2]), $array[0]))) {
+      $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
         }
     }
 }

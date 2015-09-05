@@ -14,27 +14,13 @@ class M_Editor extends Model
    */
   public function getArticles()
   {
-    $articles = array();
     $this->_error = "";
-    $server = new DBMS();
-    $result = $server->select();
+    $this->_result = $this->_databaseManager->select();
 
-    if (!$result) {
-      $this->_error = $server->error_message . PHP_EOL . $server->error_num;
-    } else {
-      foreach ($result as $arr) {
-        $values = array();
-        foreach ($arr as $v) {
-          $values[] = $v;
-        }
-        $articles[] = new Article($values);
-      }
+    if (!$this->_result) {
+      $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
     }
-    //echo '<br/>Создание статьи в model->getArticles(): <br/>';
-    //echo var_export($articles) . '<br/>';
 
-    $this->_result = $articles;
-
-    return $articles;
+    return $this->_result;
   }
 }

@@ -22,6 +22,18 @@ class C_Delete extends C_Base
    * @var Article - объект класса, описывает удаляемую статью
    */
   protected $_article;
+//  /**
+//   * @var M_Delete
+//   */
+//  protected $_model;
+//
+//  /**
+//   * C_Delete constructor.
+//   */
+//  public function __construct()
+//  {
+//    $this->_model = new M_Delete();
+//  }
 
   /**
    * Анализ входных данных, передача работы Механику, для подготовки выходных данных.
@@ -32,15 +44,14 @@ class C_Delete extends C_Base
     parent::OnInput();
 
     $this->_title .= '::Редактирование статьи';
-    $model = new M_Delete();
-    $model->deleteArticle((int)$_POST['id_article']);
+    $this->_model->deleteArticle((int)$_POST['id_article']);
 
 
     // при удаче на главную страницу
-    if (!($this->_error = $model->getError())) {
+    if (!($this->_error = $this->_model->getError())) {
       header("Location: index.php");
     } else {
-      // метод post- неудачное сохранение - повторить форму
+      // метод post- неудачное удаление - повторить форму
       $this->_article = new Article(array($_POST['id_article'], $_POST['title_article'], $_POST['content_article']));
     }
   }

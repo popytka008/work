@@ -17,6 +17,19 @@ class C_Editor extends C_Base
    */
   protected $_error;
 
+//  /**
+//   * @var M_Editor
+//   */
+//  protected $_model;
+//
+//  /**
+//   * C_Editor constructor.
+//   */
+//  public function __construct()
+//  {
+//    $this->_model = new M_Editor();
+//  }
+
   /**
    * Анализ входных данных, передача работы Механику, для подготовки выходных данных.
    * сохранение данных array[Article] в $_articles
@@ -24,12 +37,11 @@ class C_Editor extends C_Base
   protected function OnInput()
   {
     parent::OnInput();
-    $model = new M_Editor();
 
     // работаем со списком статей
     $this->_title .= '::Просмотр списка статей для редактирования';
-    $this->_articles = $model->getArticles();
-    $this->_error = $model->getError();
+    $this->_articles = $this->_model->getArticles();
+    $this->_error = $this->_model->getError();
   }
 
   /**

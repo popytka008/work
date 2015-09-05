@@ -15,28 +15,33 @@ class C_New extends C_Base
 
   protected $_error;
   protected $_article;
+//  /**
+//   * @var M_New
+//   */
 
   protected function OnInput()
   {
     parent::OnInput();
 
-    $model = new M_New();
     $this->_error = '';
     $this->_title .= "::Новая статья";
 
 
-    if ($model->isGet()) {
-      $this->_article = new Article(array('', '', ''));
-    } else {
-      // post - добавить строку (сохранить)
-      $model->addArticle(array($_POST['title_article'], $_POST['content_article']));
+    // post - добавить строку (сохранить) вывести результат предыдущего редактирования
+    if (Model::isPost()) {
+
+      $this->_model->addArticle(array($_POST['title_article'], $_POST['content_article']));
+
       // если нет ощибок - на чтартовую страницу
-      if (!($this->_error = $model->getError())) {
+      if (!($this->_error = $this->_model->getError())) {
         header("Location: index.php");
       } else {
-        //$archive = Array('title_article' => $_POST['title_article'],'content_article' => $_POST['content_article'], 'this->_error'=> $this->_error);
         $this->_article = new Article(array('', $_POST['title_article'], $_POST['content_article']));
       }
+    }
+
+    if (Model::isGet()) {
+      $this->_article = new Article(array('', '', ''));
     }
   }
 

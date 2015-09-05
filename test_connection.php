@@ -35,7 +35,7 @@ $command = "";
   File::append('test_file.txt', PHP_EOL);
 
   require_once 'lib/m/Model.php';
-  $model = new Model();
+  $model = new M_List();
 
   $content .= sprintf("new Model()->getMethod(): %s\n<br/>", $model ->getMethod());
   $content .= sprintf("new Model()->isGet(): %s\n<br/>", $model ->isGet());
@@ -52,19 +52,21 @@ $command = "";
   $str = '/*------------------- вход в разбор методов класса Connection ---------------------*/'.PHP_EOL;
   File::append('test_file.txt', $str);
 
-  require_once 'lib/m/Model.php';
-  $connection = new Connection();
+  require_once 'lib/components/ConnectionMySQL.php';
+  $connection = MysqlConnection::getInstance();
+  $connection->Connect();
   $content .= sprintf("После \$connection = new Connection(); соединение: %s<br/>".PHP_EOL, $connection->test_connection());
-  $connection->close();
+  $connection->Disconnect();
   $content .= sprintf("После \$connection->close(); соединение: %s<br/>".PHP_EOL, $connection->test_connection());
-  $connection->open();
+  $connection->Connect();
   $content .= sprintf("После \$connection->open(); соединение: %s<br/>".PHP_EOL.PHP_EOL, $connection->test_connection());
 
-  $connection->close();
+  $connection->Disconnect();
   $content .= sprintf("После \$connection->close(); соединение: %s<br/>".PHP_EOL, $connection->test_connection());
-  $tmp = Connection::getConnection();
-  $content .= sprintf("После \$tmp = Connection::getConnection(); соединение: %s<br/>".PHP_EOL, $connection->test_connection());
-  $connection->close();
+  $connection = MysqlConnection::getInstance();
+  $connection->Connect();
+  $content .= sprintf("После \$connection = Connection::getConnection(); соединение: %s<br/>" . PHP_EOL, $connection->test_connection());
+  $connection->Disconnect();
   $content .= sprintf("После \$connection->close(); соединение: %s<br/>".PHP_EOL.PHP_EOL, $connection->test_connection());
 
   File::append('test_file.txt', var_export($connection, true));

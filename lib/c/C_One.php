@@ -16,8 +16,18 @@ class C_One extends C_Base
    * @var string при array[Article]===null держит ошибку при неудачном запросе
    */
   protected $_error;
-
-
+//  /**
+//   * @var M_One
+//   */
+//  protected $_model;
+//
+//  /**
+//   * C_One constructor.
+//   */
+//  public function __construct()
+//  {
+//    $this->_model = new M_One();
+//  }
   /**
    * Передача работы Механику, для подготовки выходных данных.
    * сохранение данных array[Article] в $_articles
@@ -25,12 +35,11 @@ class C_One extends C_Base
   protected function OnInput()
   {
     parent::OnInput();
-    $model = new M_One();
 
     // работаем с одной статьёй
     $this->_title .= '::Просмотр статьи';
-    $this->_article = $model->getArticle((int)$_GET['id']);
-    $this->_error = $model->getError();
+    $this->_article = $this->_model->getArticle((int)$_GET['id']);
+    $this->_error = $this->_model->getError();
   }
 
   /**

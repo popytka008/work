@@ -1,8 +1,5 @@
 <?php
 
-require_once 'lib/m/Model.php';
-require_once "lib/components/DBMS.php";
-
 
 /**
  * Class M_Delete
@@ -17,13 +14,10 @@ class M_Delete extends Model {
    * @param $id int ключ для выборки CRUD-запроса БД DELETE
    */
     public function deleteArticle($id) {
-        //echo '<br/>Сохранение статьи в model->saveArticle($params, $id): <br/>';
-        //echo var_export($article).'<br/>';
-
         $this->_error = "";
-        $server = new DBMS();
-        if( !($this->_result = $server->delete($id))) {
-            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
+
+      if (!($this->_result = $this->_databaseManager->delete($id))) {
+        $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
         }
     }
 }

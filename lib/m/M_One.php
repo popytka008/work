@@ -14,27 +14,13 @@ class M_One extends Model
    */
   public function getArticle($id)
   {
-
-    $article = new Article(array());
     $this->_error = "";
-    $server = new DBMS();
-    $result = $server->select($id);
+    $this->_result = $this->_databaseManager->select($id);
 
-    if (!$result) {
-      $this->_error = $server->error_message . PHP_EOL . $server->error_num;
-    } else {
-      $values = array();
-      foreach ($result[0] as $v) {
-        $values[] = $v;
-      }
-      $article = new Article($values);
+    if (!$this->_result) {
+      $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
     }
 
-    //echo '<br/>Создание статьи в model->getArticle($id): <br/>';
-    //echo var_export($article).'<br/>';
-
-    $this->_result = $article;
-
-    return $article;
+    return $this->_result[0];
   }
 }

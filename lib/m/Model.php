@@ -18,7 +18,23 @@ abstract class Model
     protected $_error;
 
   /**
-   * Провериnь метод текущего HTTP-запроса (если GET)
+   * @var MysqlDatabaseManager управляет SQL-запросами к БД
+   */
+  protected $_databaseManager;
+
+
+  /**
+   * Model constructor.
+   */
+  public function __construct()
+  {
+    $this->_databaseManager = MysqlDatabaseManager::getInstance();
+  }
+
+  /* методы заглушки, суль их разворачивается в потомках, вводятся для совместимости */
+
+  /**
+   * Проверить метод текущего HTTP-запроса (если GET)
    * @return bool
    */
   static public function isGet()
@@ -40,6 +56,28 @@ abstract class Model
 //        File::append('test_file.txt', $str);
 
     return ($_SERVER['REQUEST_METHOD'] === 'POST');
+  }
+
+  public function addArticle(array $array)
+  {
+  }
+
+  public function deleteArticle($id)
+  {
+  }
+
+  public function getArticle($id)
+  { /*return new Article();*/
+    return null;
+  }
+
+  public function saveArticle(array $array)
+  {
+  }
+
+  public function getArticles()
+  {
+    return null;
   }
 
     /**

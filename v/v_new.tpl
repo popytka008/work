@@ -19,6 +19,7 @@
         <div class="control-group">
             <div class="controls form-action">
                 <input type="submit" value="Добавить" class="btn btn-success"/>
+                <input type="hidden" name='operation' id='operation' value="insert"/>
             </div>
         </div>
     </form>

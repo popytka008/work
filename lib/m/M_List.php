@@ -15,28 +15,15 @@ class M_List extends Model {
      * @param null | int $id ключ для выборки CRUD-запроса БД
      * @return array массив статей (пустой (с записью ошибки) или полный)
      */
-    public function getArticles($id = null) {
-        $articles = array();
+    public function getArticles($id = null)
+    {
         $this->_error = "";
-        $server = new DBMS();
-        $result = $server->select($id);
+        $this->_result = $this->_databaseManager->select($id);
 
-        if( !$result) {
-            $this->_error = $server->error_message . PHP_EOL . $server->error_num;
-        } else {
-            foreach($result as $arr) {
-                $values = array();
-                foreach($arr as $k => $v) {
-                    $values[] = $v;
-                }
-                $articles[] = new Article($values);
-            }
+        if (!$this->_result) {
+            $this->_error = $this->_databaseManager->_error_message . PHP_EOL . $this->_databaseManager->_error_num;
         }
-        //echo '<br/>Создание статьи в model->getArticles(): <br/>';
-        //echo var_export($articles) . '<br/>';
 
-        $this->_result = $articles;
-
-        return $articles;
+        return $this->_result;
     }
 }
