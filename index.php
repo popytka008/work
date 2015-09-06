@@ -11,13 +11,13 @@ include 'lib/scripts/start_timing.php';
 $controller = null;
 $fabric = new Fabric();
 
-if (Model::isGet()) {
+if (Model::isGet() && isset($_GET['c']))
   $controller = $fabric->getObject($_GET['c']);
-} else if (Model::isPost()) {
+ else if (Model::isPost()) {
   $controller = $fabric->postObject($_POST['operation']);
 } else {
-  $controller = new C_List(new M_List()); // вывести список статей полюбому
-}
+   $controller = new C_List(new M_List()); // вывести список статей полюбому
+ }
 
 //var_dump($controller);
 //делай!...
