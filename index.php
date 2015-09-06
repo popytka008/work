@@ -15,8 +15,11 @@ if (Model::isGet()) {
   $controller = $fabric->getObject($_GET['c']);
 } else if (Model::isPost()) {
   $controller = $fabric->postObject($_POST['operation']);
+} else {
+  $controller = new C_List(new M_List()); // вывести список статей полюбому
 }
 
+//var_dump($controller);
 //делай!...
 $controller->Request();
 

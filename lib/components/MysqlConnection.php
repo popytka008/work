@@ -40,7 +40,7 @@ class MysqlConnection extends AbstractConnection
    */
   public function test_connection()
   {
-    return ($this->isConnected() === true) ? 'Соединение существует!' : 'Соединение не существует..';
+    return ($this->isConnected() === true) ? 'РЎРѕРµРґРёРЅРµРЅРёРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!' : 'РЎРѕРµРґРёРЅРµРЅРёРµ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚..';
   }
 
   public function isConnected()

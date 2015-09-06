@@ -16,19 +16,19 @@ class Fabric
   {
     switch ($mark) {
       case 'new':
-        return new C_New(new M_New());  // вывести пустую форму новой статьи
+        return new C_New(new M_New());  // РІС‹РІРµСЃС‚Рё РїСѓСЃС‚СѓСЋ С„РѕСЂРјСѓ РЅРѕРІРѕР№ СЃС‚Р°С‚СЊРё
 
       case 'edit':
-        return new C_Edit(new M_Edit()); // вывести форму редактирования
+        return new C_Edit(new M_Edit()); // РІС‹РІРµСЃС‚Рё С„РѕСЂРјСѓ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
 
       case 'editor':
-        return new C_Editor(new M_Editor()); // вывести список заголовков статей
+        return new C_Editor(new M_Editor()); // РІС‹РІРµСЃС‚Рё СЃРїРёСЃРѕРє Р·Р°РіРѕР»РѕРІРєРѕРІ СЃС‚Р°С‚РµР№
 
       case 'one':
-        return new C_One(new M_One()); // вывести выбранную статью
+        return new C_One(new M_One()); // РІС‹РІРµСЃС‚Рё РІС‹Р±СЂР°РЅРЅСѓСЋ СЃС‚Р°С‚СЊСЋ
 
-      default: // простой вход
-        return new C_List(new M_List()); // вывести список статей
+      default: // РїСЂРѕСЃС‚РѕР№ РІС…РѕРґ
+        return new C_List(new M_List()); // РІС‹РІРµСЃС‚Рё СЃРїРёСЃРѕРє СЃС‚Р°С‚РµР№
     }
   }
 
@@ -40,14 +40,14 @@ class Fabric
   {
     switch ($mark) {
       case 'delete':
-        return new C_Delete(new M_Delete());// обработать удаление статьи
+        return new C_Delete(new M_Delete());// РѕР±СЂР°Р±РѕС‚Р°С‚СЊ СѓРґР°Р»РµРЅРёРµ СЃС‚Р°С‚СЊРё
 
       case 'insert':
       case 'new':
-        return new C_New(new M_New());   // обработать вставку статьи
+      return new C_New(new M_New());   // РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РІСЃС‚Р°РІРєСѓ СЃС‚Р°С‚СЊРё
 
       case 'update':
-        return new C_Edit(new M_Edit());  // обработать обновление статьи
+        return new C_Edit(new M_Edit());  // РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ СЃС‚Р°С‚СЊРё
 
       default:
         return null;
