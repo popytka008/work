@@ -17,7 +17,6 @@ class C_Header extends Controller
     return $this->OnOutput();
   }
 
-
   /**
    * Перечень процедур для работы с входными данными
    */
@@ -34,8 +33,7 @@ class C_Header extends Controller
   {
     $archive = array();
 
-    $v = new Viewer();
-    return $v->render("v/v_header.tpl", $archive);
+    return $this->_viewer->render("v/v_header.tpl", $archive);
   }
 
 }

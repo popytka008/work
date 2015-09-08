@@ -5,14 +5,6 @@
  * вычисляет разницу t2 - t1,
  * передает результат Видеопроектору
  */
+$t2 = microtime(true) - $t1;
 
-// засечь второе время
-$t2 = microtime();
-$t2 = explode(' ', $t2);
-$t2 = $t2[1] + $t2[0];
-
-// узнать разницу
-$dif = $t2 - $t1;
-// передать на Видеопроектор
-require_once 'lib/v/viewer.php';
-Viewer::echoCreatePgeTime($dif);
+(new Viewer())->echoCreatePgeTime($t2);

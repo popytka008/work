@@ -12,7 +12,7 @@ class Fabric
    * @param $mark string
    * @return C_Edit|C_Editor|C_List|C_New|C_One
    */
-  public function getObject($mark)
+  static public function getObject($mark)
   {
     switch ($mark) {
       case 'new':
@@ -36,7 +36,7 @@ class Fabric
    * @param $mark string
    * @return C_Delete|C_Edit|C_New|null
    */
-  public function postObject($mark)
+  static public function postObject($mark)
   {
     switch ($mark) {
       case 'delete':

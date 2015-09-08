@@ -41,7 +41,6 @@ class C_Menu extends Controller
   {
     $archive = array();
 
-    $v = new Viewer();
-    return $v->render("v/v_menu.tpl", $archive);
+    return $this->_viewer->render("v/v_menu.tpl", $archive);
   }
 }

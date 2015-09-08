@@ -52,9 +52,7 @@ class C_One extends C_Base
   {
     $archive = array('error' => nl2br($this->_error), 'article' => $this->_article);
 
-    $v = new Viewer();
-
-    $this->_content = $v->render("v/v_one.tpl", $archive);
+    $this->_content = $this->_viewer->render("v/v_one.tpl", $archive);
     parent::OnOutput();
   }
 }

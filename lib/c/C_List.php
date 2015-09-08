@@ -61,9 +61,7 @@ class C_List extends C_Base
   {
     $archive = array('error' => nl2br($this->_error), 'articles' => $this->_articles);
 
-    $v = new Viewer();
-
-    $this->_content = $v->render("v/v_list.tpl", $archive);
+    $this->_content = $this->_viewer->render("v/v_list.tpl", $archive);
     parent::OnOutput();
   }
 }

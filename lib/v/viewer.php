@@ -14,7 +14,7 @@ class Viewer {
    * Метод выводит время генерирования страницы
    * @param string $str
    */
-  static public function echoCreatePgeTime($time)
+  public function echoCreatePgeTime($time)
   {
     printf('<!-- Генерация за  . %f  секунд -->' . PHP_EOL, $time);
   }
@@ -44,17 +44,7 @@ class Viewer {
   public function out($str)
   {
     echo $str;
-    $this->echoStringLength($str);
-  }
 
-  /**
-   * Метод выводит длину генерируемой страницы в символах и байтах
-   * @param string $str
-   */
-  static public function echoStringLength($str)
-  {
-    $l = strlen($str);
-    echo '<!-- В шаблоне ' . $l . ' символов или ' . ($l * 2) . 'байт -->' . PHP_EOL;
+    echo '<!-- В шаблоне ' . ($len = strlen($str)) . ' символов или ' . ($len * 2) . 'байт -->' . PHP_EOL;
   }
-
 }

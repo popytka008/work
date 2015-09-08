@@ -1,24 +1,22 @@
 <?php
 //var_export($_GET); echo "\n<br/>";
 //var_export($_POST);
-require_once 'lib/components/Autoload.php';
-
 
 // засечь время
 include 'lib/scripts/start_timing.php';
 
+require_once 'lib/components/Autoload.php';
+
 // начальное значение
 $controller = null;
-$fabric = new Fabric();
 
 if (Model::isGet() && isset($_GET['c']))
-  $controller = $fabric->getObject($_GET['c']);
+    $controller = Fabric::getObject($_GET['c']);
  else if (Model::isPost()) {
-  $controller = $fabric->postObject($_POST['operation']);
+     $controller = Fabric::postObject($_POST['operation']);
 } else {
    $controller = new C_List(new M_List()); // вывести список статей полюбому
  }
-
 //var_dump($controller);
 //делай!...
 $controller->Request();

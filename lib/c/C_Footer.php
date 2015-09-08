@@ -33,8 +33,7 @@ class C_Footer extends Controller
   {
     $archive = array();
 
-    $v = new Viewer();
-    return $v->render("v/v_footer.tpl", $archive);
+    return $this->_viewer->render("v/v_footer.tpl", $archive);
   }
 
 }

@@ -47,7 +47,7 @@ abstract class Model
   }
 
   /**
-   * * Провериnь метод текущего HTTP-запроса (если POST)
+   * * Проверить метод текущего HTTP-запроса (если POST)
    * @return bool
    */
   static public function isPost()

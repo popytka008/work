@@ -74,8 +74,7 @@ class C_Edit extends C_Base {
     protected function OnOutput() {
         $archive = array('error' => nl2br($this->_error), 'article' => $this->_article);
 
-        $v = new Viewer();
-        $this->_content = $v->render("v/v_edit.tpl", $archive);
+        $this->_content = $this->_viewer->render("v/v_edit.tpl", $archive);
         parent::OnOutput();
     }
 }

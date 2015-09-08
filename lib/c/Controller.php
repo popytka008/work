@@ -21,6 +21,40 @@
  */
 abstract class Controller
 {
+
+  /**
+   * @var Model|null
+   */
+  protected $_model;
+  /**
+   * @var Viewer Свой Видеопроектор
+   */
+  protected $_viewer;
+  /**
+   * @var float счетчик для тестирования времени выполнения
+   */
+  protected $_timer;
+
+  /**
+   * конструктор Контролёра подключеат своего Механика
+   *
+   * @param Model|null $_model
+   */
+  public function __construct(Model $_model = null) {
+    $this->_model = $_model;
+    $this->_viewer = new Viewer();
+    //var_dump($_model);
+    //$this->_timer = microtime(true);
+  }
+
+  /**
+   * сервис по определению промежутка исполнения скрипта
+   */
+  //function __destruct(){
+  //  $this->_timer = microtime(true)-$this->_timer;
+  //  echo '<!--'.get_class($this).'-->';
+  //  $this->_viewer->echoCreatePgeTime($this->_timer);
+  //}
   /**
    * Загрузка стандортной работой
    * $this->OnInput();  - работа с входными данными
